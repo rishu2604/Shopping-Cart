@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { CartContext } from "../store/shopping-cart-context";
 
-export default function Cart({ onUpdateItemQuantity }) {
+export default function Cart() {
   // const cartCtx = useContext(CartContext);
   // We can also destructure the cartCtx object
-  const {items} = useContext(CartContext);
+  const {items, updatedItemQuantity} = useContext(CartContext);
 
   const totalPrice = items.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -27,11 +27,11 @@ export default function Cart({ onUpdateItemQuantity }) {
                   <span> ({formattedPrice})</span>
                 </div>
                 <div className="cart-item-actions">
-                  <button onClick={() => onUpdateItemQuantity(item.id, -1)}>
+                  <button onClick={() => updatedItemQuantity(item.id, -1)}>
                     -
                   </button>
                   <span>{item.quantity}</span>
-                  <button onClick={() => onUpdateItemQuantity(item.id, 1)}>
+                  <button onClick={() => updatedItemQuantity(item.id, 1)}>
                     +
                   </button>
                 </div>
@@ -46,3 +46,14 @@ export default function Cart({ onUpdateItemQuantity }) {
     </div>
   );
 }
+
+// We can also consume the value of the context by following approach
+// But this is a bit cumbersome and used in older projects
+// We don't need useContext hook if we wrap the component like this
+{/* <Context.Consumer>
+  {(ctx)=>{
+    return(
+
+    )
+  }}
+</Context.Consumer> */}
